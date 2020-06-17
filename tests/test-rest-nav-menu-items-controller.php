@@ -591,45 +591,7 @@ class WP_Test_REST_Nav_Menu_Items_Controller extends WP_Test_REST_Post_Type_Cont
 		$this->assertArrayHasKey( '_invalid', $properties );
 	}
 
-	/**
-	 *
-	 */
-	public function test_get_items_no_permission() {
-		wp_set_current_user( 0 );
-		$request  = new WP_REST_Request( 'GET', '/wp/v2/menu-items' );
-		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_view', $response, 401 );
-	}
 
-	/**
-	 *
-	 */
-	public function test_get_item_no_permission() {
-		wp_set_current_user( 0 );
-		$request  = new WP_REST_Request( 'GET', '/wp/v2/menu-items/' . $this->menu_item_id );
-		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_view', $response, 401 );
-	}
-
-	/**
-	 *
-	 */
-	public function test_get_items_wrong_permission() {
-		wp_set_current_user( self::$subscriber_id );
-		$request  = new WP_REST_Request( 'GET', '/wp/v2/menu-items' );
-		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_view', $response, 403 );
-	}
-
-	/**
-	 *
-	 */
-	public function test_get_item_wrong_permission() {
-		wp_set_current_user( self::$subscriber_id );
-		$request  = new WP_REST_Request( 'GET', '/wp/v2/menu-items/' . $this->menu_item_id );
-		$response = rest_get_server()->dispatch( $request );
-		$this->assertErrorResponse( 'rest_cannot_view', $response, 403 );
-	}
 
 	/**
 	 * @param WP_REST_Response $response Response Class.
